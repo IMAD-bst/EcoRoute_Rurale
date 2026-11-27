@@ -24,7 +24,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 DATA_DIR = BASE_DIR / "data" / "processed"
 
-GRAPH_PATH = DATA_DIR / "roads.graphml"
+# Prefer the compressed network on both local and cloud environments.
+GRAPH_PATH = DATA_DIR / "roads.graphml.gz"
+
+if not GRAPH_PATH.is_file():
+    GRAPH_PATH = DATA_DIR / "roads.graphml"
+
+if not GRAPH_PATH.is_file():
+    raise FileNotFoundError(
+        f"Road network missing in {DATA_DIR}. "
+        "Expected roads.graphml.gz or roads.graphml."
+    )
 DOUARS_PATH = DATA_DIR / "douars.csv"
 BOUNDARY_PATH = DATA_DIR / "boundary.geojson"
 CACHE_PATH = DATA_DIR / "routing_cache.db"
