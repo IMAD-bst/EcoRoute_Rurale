@@ -1,0 +1,126 @@
+{
+    "project": "EcoRoute Rurale",
+    "scenario_type": "Simulated MVP",
+    "configuration": {
+        "departure": {
+            "name": "Chefchaouen",
+            "latitude": 35.1715,
+            "longitude": -5.2697
+        },
+        "destination": {
+            "name": "Chefchaouen",
+            "latitude": 35.1715,
+            "longitude": -5.2697
+        },
+        "max_farmer_distance_km": 3.0,
+        "fuel_price_mad_per_l": 12.0,
+        "baseline_fixed_cost_mad": 50.0,
+        "baseline_cost_per_km": 3.0,
+        "baseline_vehicle_capacity_kg": 1500.0,
+        "baseline_consumption_l_100km": 10.0,
+        "local_cost_per_kg_km": 0.01,
+        "local_vehicle_capacity_kg": 500.0,
+        "local_consumption_l_100km": 6.0,
+        "minimum_savings_pct": 20.0,
+        "co2_factor_kg_per_l": 2.68,
+        "trucks": [
+            {
+                "id": 1,
+                "capacity_kg": 4000,
+                "consumption_l_100km": 18,
+                "fixed_cost": 150,
+                "cost_per_km": 2.16
+            },
+            {
+                "id": 2,
+                "capacity_kg": 3000,
+                "consumption_l_100km": 14,
+                "fixed_cost": 120,
+                "cost_per_km": 1.68
+            }
+        ]
+    },
+    "logistical": {
+        "number_of_douars": 10,
+        "number_of_collection_points": 6,
+        "collection_points_reduction_pct": 40.0,
+        "total_harvest_kg": 6328.0,
+        "available_trucks": 2,
+        "used_trucks": 2,
+        "total_fleet_capacity_kg": 7000.0,
+        "fleet_utilization_pct": 90.4,
+        "average_farmer_distance_km": 0.9346995912023711,
+        "maximum_farmer_distance_km": 2.7360491874388257,
+        "main_transport_distance_km": 232.99695283057753,
+        "local_transport_distance_km": 35.18550074272593,
+        "total_distance_km": 268.18245357330346,
+        "total_truck_driving_time_min": 532.4406280716892,
+        "maximum_truck_driving_time_min": 311.6152765716156
+    },
+    "economic": {
+        "conventional_cost_mad": 2064.708648672375,
+        "optimized_main_transport_cost_mad": 711.9921715592417,
+        "local_transport_cost_mad": 64.7741027971468,
+        "total_effective_cost_mad": 776.7662743563884,
+        "total_net_savings_mad": 1287.9423743159864,
+        "global_net_savings_pct": 62.378891818181906,
+        "average_effective_cost_per_kg": 0.1227506754671916,
+        "transporter_revenue_mad": 711.9921715592415,
+        "cost_recovery_pct": 99.99999999999997
+    },
+    "social": {
+        "optimal_solidarity_coefficient": 1.0,
+        "total_redistributed_mad": 130.8450215183097,
+        "solidarity_beneficiaries": 5,
+        "solidarity_contributors": 5,
+        "benefiting_douars": 10,
+        "benefiting_douars_pct": 100.0,
+        "minimum_net_savings_pct": 23.441952769970325,
+        "maximum_net_savings_pct": 87.23449034586743,
+        "average_net_savings_pct": 62.28466486282385,
+        "high_isolation_douars": 2,
+        "high_isolation_solidarity_gain_mad": 101.34816354838519,
+        "financial_validation_passed": 8,
+        "financial_validation_total": 8
+    },
+    "environmental": {
+        "conventional_trips": 10,
+        "optimized_main_trips": 2,
+        "local_round_trips": 8,
+        "conventional_distance_km": 1047.6363333505003,
+        "optimized_complete_distance_km": 268.18245357330346,
+        "distance_saved_km": 779.4538797771968,
+        "distance_reduction_pct": 74.40118817609014,
+        "conventional_fuel_l": 104.76363333505002,
+        "optimized_complete_fuel_l": 38.9438110078337,
+        "fuel_saved_l": 65.81982232721631,
+        "fuel_reduction_pct": 62.82697557530725,
+        "conventional_co2_kg": 280.7665373379341,
+        "optimized_complete_co2_kg": 104.36941350099431,
+        "co2_saved_kg": 176.39712383693978,
+        "co2_reduction_pct": 62.82697557530725,
+        "conventional_carbon_intensity": 44.3689218296356,
+        "optimized_carbon_intensity": 16.49327014870327
+    },
+    "validation": {
+        "Full transportation cost recovery": true,
+        "Non-negative prices": true,
+        "All douars benefit": true,
+        "Minimum savings threshold respected": true,
+        "Balanced solidarity redistribution": true,
+        "Unit price decreases with isolation": true,
+        "All high-isolation douars receive extra benefits": true,
+        "Global savings remain consistent": true
+    },
+    "methodological_notes": [
+        "Road distances are based on OpenStreetMap data.",
+        "Agricultural quantities are simulated.",
+        "Conventional transport tariffs are simulated.",
+        "Vehicle consumption and capacity are configurable assumptions.",
+        "Isolation scores are relative to selected douars.",
+        "Environmental estimates include local round trips.",
+        "CO2 estimates represent direct fuel combustion emissions.",
+        "Road accessibility for trucks is not field-validated.",
+        "Economic and environmental baselines use different assumptions."
+    ]
+}

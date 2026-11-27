@@ -1,0 +1,11 @@
+osm_id,douar,collection_id,distance_km,collection_point,cluster
+node/13592990910,Ezlaïma ازلايمة,node/13592990910,0.0,Ezlaïma ازلايمة,1
+node/13964798855,Tajensa تجنزة,node/13592990910,1.6348077347543706,Ezlaïma ازلايمة,1
+node/14140893592,Tajaïelt تجايلت,node/13605620202,2.3154562953381537,Mongoch مونكوش,2
+node/14140912502,Aabaïdine اعبايدن,node/13605620202,2.7360491874388257,Mongoch مونكوش,2
+node/14140912223,Talmate تلمات,node/13605620202,2.6606826944923605,Mongoch مونكوش,2
+node/13605620202,Mongoch مونكوش,node/13605620202,0.0,Mongoch مونكوش,2
+node/13592990911,El Ouadine الواديين,node/13592990911,0.0,El Ouadine الواديين,3
+node/13592990912,Asfourite عصفورت,node/13592990912,0.0,Asfourite عصفورت,4
+node/13512384833,يسك,node/13512384833,0.0,يسك,5
+node/14140893598,Ikhelladine إخلادن,node/14140893598,0.0,Ikhelladine إخلادن,6

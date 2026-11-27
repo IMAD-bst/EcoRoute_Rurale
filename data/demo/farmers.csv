@@ -1,0 +1,11 @@
+osm_id,name,quantity_kg,collection_id,collection_point,distance_km,cluster,isolation_score,isolation_level
+node/14140912502,Aabaïdine اعبايدن,289,node/13605620202,Mongoch مونكوش,2.7360491874388257,2,0.4391768921326469,Medium
+node/14140893592,Tajaïelt تجايلت,974,node/13605620202,Mongoch مونكوش,2.3154562953381537,2,0.33558480437120664,Medium
+node/13592990910,Ezlaïma ازلايمة,855,node/13592990910,Ezlaïma ازلايمة,0.0,1,0.7004473202870867,High
+node/14140912223,Talmate تلمات,639,node/13605620202,Mongoch مونكوش,2.6606826944923605,2,0.596728305094089,Medium
+node/13605620202,Mongoch مونكوش,633,node/13605620202,Mongoch مونكوش,0.0,2,0.14464699415972282,Low
+node/13964798855,Tajensa تجنزة,1059,node/13592990910,Ezlaïma ازلايمة,1.6348077347543706,1,0.732208881773472,High
+node/13592990911,El Ouadine الواديين,286,node/13592990911,El Ouadine الواديين,0.0,3,0.3217316472889429,Medium
+node/13592990912,Asfourite عصفورت,898,node/13592990912,Asfourite عصفورت,0.0,4,0.20338066573626595,Low
+node/13512384833,يسك,401,node/13512384833,يسك,0.0,5,0.5314874262704268,Medium
+node/14140893598,Ikhelladine إخلادن,294,node/14140893598,Ikhelladine إخلادن,0.0,6,0.5736212697211732,Medium
