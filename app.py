@@ -246,7 +246,7 @@ with tab1:
             )
         },
         key=f"production_editor_{st.session_state['production_revision']}",
-        use_container_width=True
+        width="stretch"
     )
 
     quantity_store.update(production.set_index("osm_id")["quantity_kg"].to_dict())
@@ -300,7 +300,7 @@ with tab2:
         key=f"fleet_editor_{st.session_state['fleet_revision']}",
         num_rows="dynamic",
         hide_index=True,
-        use_container_width=True,
+        width="stretch",
         column_config={
             "id": st.column_config.NumberColumn(
                 t("truck_id"),
@@ -428,7 +428,7 @@ st.sidebar.divider()
 run_button = st.sidebar.button(
     t("run"),
     type="primary",
-    use_container_width=True
+    width="stretch"
 )
 
 scenario_signature = json.dumps({
@@ -720,7 +720,7 @@ if "optimization_result" in st.session_state:
         st.dataframe(
             pricing_table.round(2),
             hide_index=True,
-            use_container_width=True
+            width="stretch"
         )
     # ==============================================
     # Economic and social charts
