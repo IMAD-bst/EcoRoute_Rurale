@@ -333,7 +333,9 @@ with tab2:
     )
 
     st.session_state["fleet_saved"] = fleet_data.copy()
-    total_capacity = fleet_data["capacity_kg"].sum()
+    max_trips = st.number_input(t("max_trips"), min_value=1, value=1, step=1, key="max_trips")
+    st.caption(t("trip_note"))
+    total_capacity = fleet_data["capacity_kg"].sum() * max_trips
     total_production = production["quantity_kg"].sum()
 
     col1, col2, col3 = st.columns(3)
@@ -344,7 +346,7 @@ with tab2:
     )
 
     col2.metric(
-        t("fleet_capacity"),
+        t("trip_capacity"),
         f"{total_capacity:,.0f} kg"
     )
 
@@ -434,7 +436,7 @@ scenario_signature = json.dumps({
     "fleet": fleet_data.to_dict("records"),
     "departure": departure, "destination": destination,
     "settings": [fuel_price, max_distance, baseline_fixed_cost,
-                 baseline_cost_per_km, local_cost, minimum_savings, max_alpha]
+                 baseline_cost_per_km, local_cost, minimum_savings, max_alpha, max_trips]
 }, sort_keys=True, default=str)
 
 if run_button:
@@ -504,6 +506,7 @@ if run_button:
 
                     max_alpha=max_alpha,
 
+                    max_trips=max_trips,
                     progress_callback=update_progress
 
                 )
@@ -638,13 +641,14 @@ if "optimization_result" in st.session_state:
     st.divider()
 
     st.subheader(t("routes"))
+    st.caption(f"{t('trip_count')}: {result['routing'].get('number_of_trips', len(result['routing']['routes']))}")
 
     for route in result["routing"]["routes"]:
 
         with st.container(border=True):
 
             st.markdown(
-                f"### 🚚 {t('truck')} {route['truck_id']}"
+                f"### 🚚 {t('truck')} {route.get('truck_label', route['truck_id'])}"
             )
 
             st.write(

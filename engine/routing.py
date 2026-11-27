@@ -136,7 +136,7 @@ def optimize_routes(
     manager = pywrapcp.RoutingIndexManager(
         n,
         num_vehicles,
-        [start_node] * num_vehicles,
+        [start_node if t.get("trip_number", 1) == 1 else end_node for t in trucks],
         [end_node] * num_vehicles
     )
 
@@ -215,6 +215,11 @@ def optimize_routes(
     # --------------------------------------------------
     # Search configuration
     # --------------------------------------------------
+
+    # A later trip can only be used if the previous trip is used.
+    for k in range(1, num_vehicles):
+        if trucks[k].get("trip_number", 1) > 1:
+            routing.solver().Add(routing.ActiveVehicleVar(k) <= routing.ActiveVehicleVar(k-1))
 
     search_parameters = (
         pywrapcp.DefaultRoutingSearchParameters()
@@ -339,6 +344,7 @@ def optimize_routes(
         routes.append({
 
             "truck_id": truck["id"],
+            "trip_number": truck.get("trip_number", 1),
 
             "route_ids": [
                 ids[node]
@@ -480,7 +486,7 @@ def validate_routes(optimization, locations):
 
         "correct_departure": all(
 
-            route["route_ids"][0] == "departure"
+            route["route_ids"][0] == ("departure" if route.get("trip_number", 1) == 1 else "destination")
 
             for route in routes
         ),

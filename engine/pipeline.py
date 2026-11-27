@@ -64,7 +64,8 @@ def run_pipeline(
     isolation_weights=(0.3, 0.3, 0.4),
     clustering_time_limit=15,
     routing_time_limit=10,
-    progress_callback=None
+    progress_callback=None,
+    max_trips=1
 ):
 
     pipeline_start = perf_counter()
@@ -99,10 +100,15 @@ def run_pipeline(
         fuel_price
     )
 
-    feasibility = check_fleet_capacity(
-        farmers,
-        fleet
-    )
+    physical_fleet = fleet
+    if isinstance(max_trips, bool) or int(max_trips) != max_trips or max_trips < 1:
+        raise ValueError("max_trips must be a positive integer.")
+    if max_trips > 1:
+        fleet = [dict(truck, id=i * int(max_trips) + trip,
+                      physical_truck_id=truck["id"], trip_number=trip)
+                 for i, truck in enumerate(physical_fleet)
+                 for trip in range(1, int(max_trips) + 1)]
+    feasibility = check_fleet_capacity(farmers, fleet)
 
     if not feasibility["preliminary_feasible"]:
 
@@ -237,6 +243,13 @@ def run_pipeline(
             "Routing validation failed."
         )
 
+    for route in routing["routes"]:
+        slot = next(t for t in fleet if t["id"] == route["truck_id"])
+        route["physical_truck_id"] = slot.get("physical_truck_id", slot["id"])
+        route["trip_number"] = slot.get("trip_number", 1)
+    routing["number_of_trips"] = len(routing["routes"])
+    routing["used_trucks"] = len({r["physical_truck_id"] for r in routing["routes"]})
+    routing["available_trucks"] = len(physical_fleet)
     timings["routing"] = (
         perf_counter() - start
     )
@@ -296,6 +309,11 @@ def run_pipeline(
                 f"Load mismatch for truck {truck_id}."
             )
 
+    slot_labels = {r["truck_id"]: (str(r["physical_truck_id"]) if max_trips == 1 else f'{r["physical_truck_id"]} / #{r["trip_number"]}') for r in routing["routes"]}
+    assignments["truck_label"] = assignments["truck_id"].map(slot_labels)
+    collection_points["truck_label"] = collection_points["truck_id"].map(slot_labels)
+    for route in routing["routes"]:
+        route["truck_label"] = slot_labels[route["truck_id"]]
     clustering["assignments"] = assignments
 
     timings["assignment_sync"] = (
@@ -384,7 +402,8 @@ def run_pipeline(
             farmers["quantity_kg"].sum()
         ),
 
-        "available_trucks": len(fleet),
+        "available_trucks": len(physical_fleet),
+        "number_of_trips": routing["number_of_trips"],
 
         "used_trucks": routing["used_trucks"],
 
@@ -434,7 +453,8 @@ def run_pipeline(
 
         "farmers": farmers,
 
-        "fleet": fleet,
+        "fleet": physical_fleet,
+        "trip_slots": fleet,
 
         "departure": departure,
 

@@ -267,3 +267,11 @@ def translate(key, language="fr"):
     return TRANSLATIONS[language].get(key, key)
 
 PROGRESS_KEYS = {TRANSLATIONS["en"][f"progress{i}"]: f"progress{i}" for i in range(1, 10)}
+
+
+for lang, values in {
+    "fr": ("Voyages maximum par camion", "Capacité cumulée des voyages", "Nombre de voyages", "Coût fixe facturé par voyage. Les voyages suivants partent du marché. Pas de fractionnement individuel ni de limite horaire dans cette version."),
+    "en": ("Maximum trips per truck", "Combined trip capacity", "Number of trips", "Fixed cost charged per trip. Later trips start at the market. Individual load splitting and working-hour limits are not supported yet."),
+    "ar": ("أقصى عدد الرحلات لكل شاحنة", "السعة الإجمالية للرحلات", "عدد الرحلات", "تحتسب التكلفة الثابتة لكل رحلة. تنطلق الرحلات التالية من السوق. لا يدعم هذا الإصدار تقسيم حمولة الدوار أو تحديد ساعات العمل.")
+}.items():
+    TRANSLATIONS[lang].update(zip(("max_trips", "trip_capacity", "trip_count", "trip_note"), values))
