@@ -36,9 +36,14 @@ def build_charts(result, language='fr', minimum_target=None):
             fig.add_hline(y=minimum_target, line_dash='dash', line_color='#B45309')
         figures['social'] = fig
     fleet = pd.DataFrame(result['fleet'])
-    used = {int(r['truck_id']):r['load_kg'] for r in result['routing']['routes']}
+    used = {}
+    trips = {}
+    for r in result['routing']['routes']:
+        k = int(r.get('physical_truck_id', r['truck_id']))
+        used[k] = used.get(k, 0) + r['load_kg']
+        trips[k] = trips.get(k, 0) + 1
     fleet['label'] = fleet['id'].map(lambda x: f'{l[11]} {x}')
-    fleet['utilization'] = fleet.apply(lambda r: 100*used.get(int(r['id']),0)/r['capacity_kg'],axis=1)
+    fleet['utilization'] = fleet.apply(lambda r: 100*used.get(int(r['id']),0)/(r['capacity_kg']*max(1,trips.get(int(r['id']),0))),axis=1)
     fig = px.bar(fleet, x='label', y='utilization', title=l[4], labels={'label':l[11],'utilization':l[12]}, color_discrete_sequence=['#2563EB'], text='utilization')
     fig.update_traces(texttemplate='%{y:.1f}%')
     fig.update_yaxes(range=[0,110])

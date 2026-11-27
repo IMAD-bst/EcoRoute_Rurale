@@ -115,7 +115,7 @@ def create_optimization_map(result, language="fr"):
 
     farmers = farmers.merge(
         result["assignments"][
-            ["osm_id", "collection_id", "truck_id"]
+            ["osm_id", "collection_id", "truck_id", "truck_label"]
         ],
         on="osm_id",
         validate="one_to_one"
@@ -162,7 +162,7 @@ def create_optimization_map(result, language="fr"):
             index % len(ROUTE_COLORS)
         ]
 
-        truck_id = route["truck_id"]
+        truck_id = route.get("truck_label", route["truck_id"])
 
         route_layer = folium.FeatureGroup(
             name=f"{labels['truck']} {truck_id}"
@@ -215,7 +215,7 @@ def create_optimization_map(result, language="fr"):
             <b>{escape(str(row.name))}</b><br>
             {labels['production']}: {row.quantity_kg} kg<br>
             {labels['isolation']}: {row.isolation_score * 100:.1f}%<br>
-            {labels['assigned_truck']}: {row.truck_id}
+            {labels['assigned_truck']}: {row.truck_label}
         </div>
         """
 
@@ -264,7 +264,7 @@ def create_optimization_map(result, language="fr"):
             {labels['collection_points']}<br>
             {labels['production']}: {row.quantity_kg} kg<br>
             {labels['settlements']}: {row.number_of_douars}<br>
-            {labels['assigned_truck']}: {row.truck_id}
+            {labels['assigned_truck']}: {row.truck_label}
         </div>
         """
 
@@ -383,7 +383,7 @@ def create_optimization_map(result, language="fr"):
 
         legend += f"""
         <span style="color:{color}">━━</span>
-        {labels['truck']} {route['truck_id']}<br>
+        {labels['truck']} {route.get('truck_label', route['truck_id'])}<br>
         """
 
     legend += "</div>"
