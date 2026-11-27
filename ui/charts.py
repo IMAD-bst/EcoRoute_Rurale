@@ -61,10 +61,10 @@ def render_charts(result, language='fr', minimum_target=None):
     if 'cost' in figures:
         st.caption(l[14])
         a,b = st.columns(2)
-        a.plotly_chart(figures['cost'], use_container_width=True, key='chart_cost')
-        b.plotly_chart(figures['fleet'], use_container_width=True, key='chart_fleet')
-        st.plotly_chart(figures['savings'], use_container_width=True, key='chart_savings')
-        st.plotly_chart(figures['social'], use_container_width=True, key='chart_social')
+        a.plotly_chart(figures['cost'], width="stretch", key='chart_cost')
+        b.plotly_chart(figures['fleet'], width="stretch", key='chart_fleet')
+        st.plotly_chart(figures['savings'], width="stretch", key='chart_savings')
+        st.plotly_chart(figures['social'], width="stretch", key='chart_social')
     else:
         st.info(l[17])
-        st.plotly_chart(figures['fleet'], use_container_width=True, key='chart_fleet')
+        st.plotly_chart(figures['fleet'], width="stretch", key='chart_fleet')
